@@ -36,11 +36,6 @@ module.exports = [
     ]
   },
   plugins: [
-    /* use jQuery as Global */
-    new webpack.ProvidePlugin({
-        jQuery: "jquery",
-        $: "jquery"
-    })
   ],
   resolve: {
     extensions: ['.js']
