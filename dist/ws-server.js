@@ -11,32 +11,33 @@ var http = require('http');
 //------------------------
 var clientScript = function clientScript() {
 
+  var $ = function $(q) {
+    return document.querySelector(q);
+  };
+  var output = function output(s) {
+    var t = document.createTextNode(s);
+    var p = document.createElement('p');
+    p.appendChild(t);
+    $('#out').appendChild(p);
+  };
+
   var ws = new WebSocket('ws://localhost:8081/');
   ws.addEventListener('open', function () {
     ws.addEventListener('message', function (message) {
-      var t = document.createTextNode(message.data);
-      var p = document.createElement('p');
-      p.appendChild(t);
-      document.querySelector('#out').appendChild(p);
+      output(message.data);
     });
     ws.addEventListener('close', function () {
-      var t = document.createTextNode('WebSocketの接続が切断しました。');
-      var p = document.createElement('p');
-      p.appendChild(t);
-      document.querySelector('#out').appendChild(p);
+      output('WebSocketの接続が切断しました。');
     });
     ws.addEventListener('error', function (event) {
-      var t = document.createTextNode('エラーが発生しました。');
-      var p = document.createElement('p');
-      p.appendChild(t);
-      document.querySelector('#out').appendChild(p);
+      output('エラーが発生しました。');
       console.error(event);
     });
   });
 
   window.addEventListener('load', function () {
-    document.querySelector('#send').addEventListener('click', function () {
-      ws.send(document.querySelector('#msg').value);
+    $('#send').addEventListener('click', function () {
+      ws.send($('#msg').value);
     });
   });
 };

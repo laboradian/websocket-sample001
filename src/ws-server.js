@@ -9,32 +9,31 @@ const http = require('http');
 //------------------------
 const clientScript = () => {
 
+  const $ = (q) => document.querySelector(q);
+  const output = (s) => {
+    const t = document.createTextNode(s);
+    const p = document.createElement('p');
+    p.appendChild(t);
+    $('#out').appendChild(p);
+  };
+
   const ws = new WebSocket('ws://localhost:8081/');
   ws.addEventListener('open', () => {
     ws.addEventListener('message', (message) => {
-      const t = document.createTextNode(message.data);
-      const p = document.createElement('p');
-      p.appendChild(t);
-      document.querySelector('#out').appendChild(p);
+      output(message.data);
     });
     ws.addEventListener('close', () => {
-      const t = document.createTextNode('WebSocketの接続が切断しました。');
-      const p = document.createElement('p');
-      p.appendChild(t);
-      document.querySelector('#out').appendChild(p);
+      output('WebSocketの接続が切断しました。');
     });
     ws.addEventListener('error', (event) => {
-      const t = document.createTextNode('エラーが発生しました。');
-      const p = document.createElement('p');
-      p.appendChild(t);
-      document.querySelector('#out').appendChild(p);
+      output('エラーが発生しました。');
       console.error(event);
     });
   });
 
   window.addEventListener('load', () => {
-    document.querySelector('#send').addEventListener('click', () => {
-      ws.send(document.querySelector('#msg').value);
+    $('#send').addEventListener('click', () => {
+      ws.send($('#msg').value);
     });
   });
 }
