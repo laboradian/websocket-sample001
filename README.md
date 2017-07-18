@@ -13,3 +13,9 @@ WebSocketサーバーとクライアントのサンプル001
 
 3. ウェブブラウザで、`http://localhost:3000` にアクセスします。
 
+
+スクリーンショット
+--------
+
+![スクリーンショット](https://raw.githubusercontent.com/wiki/laboradian/websocket-server-sample001/images/201707_ws-sample001.png)
+
