@@ -11,7 +11,7 @@ WebSocketサーバーとクライアントのサンプル001
     $ node dist/ws-server.js
     ```
 
-3. ウェブブラウザで、`http://localhost:3000` にアクセスします。
+3. ウェブブラウザで、`http://localhost:8080` にアクセスします。
 
 
 スクリーンショット

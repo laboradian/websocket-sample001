@@ -1,12 +1,15 @@
 const http = require('http');
 
 // HOST:           localhost
-// HTTP port:      3000
-// WebSocket port: 8080
+// HTTP port:      8080
+// WebSocket port: 8081
 
+//------------------------
+// クライアント側の処理
+//------------------------
 const clientScript = () => {
 
-  const ws = new WebSocket('ws://localhost:8080/');
+  const ws = new WebSocket('ws://localhost:8081/');
   ws.addEventListener('open', () => {
     ws.addEventListener('message', (message) => {
       const t = document.createTextNode(message.data);
@@ -27,8 +30,6 @@ const clientScript = () => {
       document.querySelector('#out').appendChild(p);
       console.error(event);
     });
-
-
   });
 
   window.addEventListener('load', () => {
@@ -38,6 +39,9 @@ const clientScript = () => {
   });
 }
 
+//---------------------
+// Webサーバー側の処理
+//---------------------
 const server = http.createServer((req, res) => {
   res.writeHead(200, {'Content-Type': 'text/html'});
   const html = `<!DOCTYPE html>
@@ -127,10 +131,13 @@ const server = http.createServer((req, res) => {
   res.end(html);
 });
 
+//-------------------------
+// WebSocketサーバーの処理
+//-------------------------
 const WebSocketServer = require('ws').Server
 const wss = new WebSocketServer({
 	host : '0.0.0.0',
-	port : 8080
+	port : 8081
 });
 wss.on('connection', (ws) => {
 	ws.on('message', (message) => {
@@ -138,4 +145,5 @@ wss.on('connection', (ws) => {
 	});
 });
 
-server.listen(3000);
+// 最後にWebサーバーを開始する。
+server.listen(8080);
